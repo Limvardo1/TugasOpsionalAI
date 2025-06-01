@@ -1,59 +1,87 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import axios from 'axios';
 
 const UserLogin = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
-      const user = res.data;
-      if (user.role === 'student') {
-        // Redirect user directly to quiz page, skipping UserMainPage
-        navigate('/quiz');
-      } else {
-        setError('Invalid user role for this login');
-      }
+      const response = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+      // Assuming response contains token or session info
+      localStorage.setItem('user', JSON.stringify({ username, role: 'user', token: response.data.token }));
+      navigate('/user/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError('Invalid username or password');
     }
   };
 
   return (
-    <div className="login-container">
-      <h1>User Login</h1>
-      <form onSubmit={handleSubmit} className="login-form">
-        <div className="form-group">
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            autoFocus
-          />
-        </div>
-        <div className="form-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p className="error-text">{error}</p>}
-        <button type="submit" className="btn-submit">Login</button>
+    <div style={styles.container}>
+      <h2>User Login</h2>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          style={styles.input}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={styles.input}
+        />
+        {error && <p style={styles.error}>{error}</p>}
+        <button type="submit" style={styles.button}>Login</button>
       </form>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    maxWidth: '400px',
+    margin: '100px auto',
+    padding: '30px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    backgroundColor: '#f9f9f9',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  input: {
+    padding: '12px',
+    marginBottom: '15px',
+    fontSize: '16px',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+  },
+  button: {
+    padding: '12px',
+    fontSize: '16px',
+    borderRadius: '4px',
+    border: 'none',
+    backgroundColor: '#273c75',
+    color: '#fff',
+    cursor: 'pointer',
+  },
+  error: {
+    color: 'red',
+    marginBottom: '15px',
+  },
 };
 
 export default UserLogin;

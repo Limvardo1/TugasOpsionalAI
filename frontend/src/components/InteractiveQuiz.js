@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './InteractiveQuiz.css';
+import './styles/InteractiveQuiz.css';
 
 const InteractiveQuiz = () => {
   const [timeLeft, setTimeLeft] = useState(15);

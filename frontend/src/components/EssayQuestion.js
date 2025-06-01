@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './EssayQuestion.css';
+import './styles/EssayQuestion.css';
 
 const EssayQuestion = () => {
   const [answer, setAnswer] = useState('');

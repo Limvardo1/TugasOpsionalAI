@@ -12,6 +12,7 @@ import QuestionManagement from './components/QuestionManagement';
 import AddMultipleChoiceQuestion from './components/AddMultipleChoiceQuestion';
 import InteractiveQuiz from './components/InteractiveQuiz';
 import EssayQuestion from './components/EssayQuestion';
+import UserMainPage from './components/UserMainPage';
 import './App.css';
 
 function App() {
@@ -21,8 +22,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login/user" element={<UserLogin />} />
         <Route path="/login/admin" element={<AdminLogin />} />
-        {/* Removed UserMainPage route as per request */}
-        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/usermainpage" element={<UserMainPage />} />
+        <Route path="/quiz" element={<Quiz />} /> 
         <Route path="/interactive-quiz" element={<InteractiveQuiz />} />
         <Route path="/essay-question" element={<EssayQuestion />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />

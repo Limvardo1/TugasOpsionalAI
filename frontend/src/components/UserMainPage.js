@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './UserMainPage.css';
+import './styles/UserMainPage.css';
 
 const UserMainPage = () => {
   const [places, setPlaces] = useState([]);
